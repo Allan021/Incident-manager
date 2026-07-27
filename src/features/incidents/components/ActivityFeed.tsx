@@ -5,6 +5,7 @@ import { useToast } from '@/components/toast'
 import { useIncidentChannel } from '@/hooks/useIncidentChannel'
 import type { IncidentUpdate } from '@/lib/types'
 import { postUpdate } from '../actions'
+import { mergeUpdates } from '../mergeUpdates'
 import { UpdateComposer } from './UpdateComposer'
 import { UpdateItem, type FeedItem } from './UpdateItem'
 
@@ -25,11 +26,7 @@ export function ActivityFeed({
     name: currentUserName,
   })
 
-  const items = useMemo<FeedItem[]>(() => {
-    const byId = new Map<string, FeedItem>()
-    for (const u of [...live, ...initial]) byId.set(u.id, u)
-    return [...byId.values()].sort((a, b) => +new Date(b.created_at) - +new Date(a.created_at))
-  }, [live, initial])
+  const items = useMemo<FeedItem[]>(() => mergeUpdates(live, initial), [live, initial])
 
   const [optimistic, addOptimistic] = useOptimistic(items, (state, item: FeedItem) => [
     item,
