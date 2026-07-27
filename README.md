@@ -21,7 +21,7 @@ Built with **Next.js 15 (App Router / React Server Components)** and **Supabase*
 > `reviewer2@` in a private window → open the same incident in both → post an
 > update in one → it appears in the other **without a refresh**. Change a
 > status or severity from the detail page and watch the other session's
-> dashboard re-sort itself. The same credentials are shown on the login page.
+> dashboard re-sort itself.
 
 ---
 
@@ -75,7 +75,6 @@ Other scripts:
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | yes | Anon key. Safe to expose — every table is behind RLS |
 | `SLOW_STATS_MS` | no (default `600`) | Demo latency on the streamed dashboard stats so the Suspense skeleton is observable. Set `0` for production behaviour |
 | `E2E_EMAIL` / `E2E_PASSWORD` | no | Credentials for the authenticated Playwright tests |
-| `NEXT_PUBLIC_DEMO_EMAIL` / `NEXT_PUBLIC_DEMO_EMAIL_2` / `NEXT_PUBLIC_DEMO_PASSWORD` | no | When set, the login page shows a reviewer-access card with these demo credentials. Leave empty outside demo deployments |
 
 No service-role key is used anywhere. Nothing bypasses row level security.
 `.env.local` is gitignored; `.env.example` documents the shape.
