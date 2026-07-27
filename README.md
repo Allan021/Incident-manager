@@ -50,20 +50,39 @@ Built with **Next.js 15 (App Router / React Server Components)** and **Supabase*
 
 ## 1. Running it locally
 
+**Prerequisites:** Node.js ≥ 18.18 (20+ recommended) and npm. A free
+[Supabase](https://supabase.com) account for the database — or skip local setup
+entirely and use the deployed version linked above.
+
+From zero to running:
+
 ```bash
+# 1. Install dependencies
 npm install
-cp .env.example .env.local     # then fill in your Supabase values
+
+# 2. Create a Supabase project (supabase.com → New project), then copy
+#    Project Settings → API → "Project URL" and "anon public" key into:
+cp .env.example .env.local
+
+# 3. Set up the database — see section 3 for the two SQL files to run
+#    (schema first, then seed) and how to create a login user.
+
+# 4. Start the app
 npm run dev                    # http://localhost:3000
 ```
 
-Other scripts:
+Sign in with the user you created in step 3 — the dashboard shows the 9 seeded
+incidents.
+
+All scripts:
 
 | Script | What it does |
 |---|---|
+| `npm run dev` | Development server |
 | `npm run build` | Production build |
 | `npm run typecheck` | `tsc --noEmit` |
-| `npm test` | Jest + React Testing Library unit/component suite |
-| `npm run test:e2e` | Playwright end-to-end tests |
+| `npm test` | Jest + React Testing Library unit/component suite (no DB needed) |
+| `npm run test:e2e` | Playwright end-to-end tests — run `npx playwright install` once first |
 
 ---
 
@@ -550,7 +569,11 @@ documented guarantee, not just a snapshot:
 | `UpdateItem.test` | Optimistic rows show "Sending…", settled rows don't (§4.4) |
 | `ToastProvider.test` | Toasts announce via `role="status"` without stealing focus, and auto-dismiss |
 
-**`npm run test:e2e`** — Playwright, five specs on the highest-value paths:
+**`npm run test:e2e`** — Playwright, five specs on the highest-value paths.
+First time only: `npx playwright install` (downloads the browsers). The runner
+starts the dev server by itself; specs that need a signed-in user read
+`E2E_EMAIL` / `E2E_PASSWORD` from the environment (any user created in §3
+works) and skip cleanly when the variables are absent.
 
 1. `/dashboard` redirects an anonymous visitor to `/login` and never renders the
    protected heading.
@@ -562,8 +585,6 @@ documented guarantee, not just a snapshot:
 4. Filters round-trip through the URL and survive a reload.
 5. Posting an update appears optimistically within 1s, then persists across a
    reload.
-
-Specs 3–5 need `E2E_EMAIL` / `E2E_PASSWORD` and skip cleanly without them.
 
 ---
 
