@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { UserMenu } from './UserMenu'
 
-const user = { name: 'Alex Rivera', email: 'alex@opswatch.dev' }
+const user = { name: 'Alex Rivera', email: 'alex@kizerwatch.dev' }
 
 describe('UserMenu', () => {
   it('opens on click and exposes expanded state', () => {
@@ -12,7 +12,7 @@ describe('UserMenu', () => {
     fireEvent.click(trigger)
     expect(trigger).toHaveAttribute('aria-expanded', 'true')
     expect(screen.getByRole('menu')).toBeInTheDocument()
-    expect(screen.getByText('alex@opswatch.dev')).toBeInTheDocument()
+    expect(screen.getByText('alex@kizerwatch.dev')).toBeInTheDocument()
   })
 
   it('closes on Escape', () => {

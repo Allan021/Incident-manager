@@ -4,7 +4,7 @@ import { cssVariables } from '@/lib/tokens'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Opswatch — Incident Command Center',
+  title: 'KizerWatch — Incident Command Center',
   description: 'Monitor and coordinate active operational incidents.',
 }
 

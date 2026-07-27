@@ -14,7 +14,7 @@ import {
 import { isSeverity, isStatus } from '@/lib/domain'
 import { getCounts, getIncidents } from '@/lib/queries'
 
-export const metadata = { title: 'Incidents — Opswatch' }
+export const metadata = { title: 'Incidents — KizerWatch' }
 
 export const dynamic = 'force-dynamic'
 

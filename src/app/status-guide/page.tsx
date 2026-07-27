@@ -2,7 +2,7 @@ import { Nav } from '@/components/nav'
 import { Badge } from '@/components/ui'
 import { SEV, SEVERITIES, ST, STATUSES, type Meta } from '@/lib/domain'
 
-export const metadata = { title: 'Status guide — Opswatch' }
+export const metadata = { title: 'Status guide — KizerWatch' }
 
 export const dynamic = 'force-static'
 export const revalidate = 3600
@@ -66,7 +66,7 @@ export default function StatusGuidePage() {
             textWrap: 'pretty',
           }}
         >
-          How Opswatch classifies incidents. This page is public — no sign-in required — so anyone
+          How KizerWatch classifies incidents. This page is public — no sign-in required — so anyone
           can understand what a badge means.
         </p>
 

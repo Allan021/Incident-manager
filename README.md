@@ -1,4 +1,4 @@
-# Opswatch — Real-Time Incident Command Center
+# KizerWatch — Real-Time Incident Command Center
 
 An operations team's incident console: sign in, triage what's burning, open an
 incident, watch the activity feed update live, post an update without the page
@@ -6,6 +6,22 @@ ever flickering.
 
 Built with **Next.js 15 (App Router / React Server Components)** and **Supabase**
 (Postgres + Auth + Realtime), in **TypeScript**.
+
+> **Reviewer quick start — no setup needed**
+>
+> Live deploy: **https://incident-manager-seven.vercel.app**
+>
+> | Account | Password |
+> |---|---|
+> | `reviewer@kizerwatch.dev` | `KizerWatch2026!` |
+> | `reviewer2@kizerwatch.dev` | `KizerWatch2026!` |
+>
+> The seeded dashboard has 9 incidents across every severity and status.
+> **60-second real-time validation:** sign in as `reviewer@` in one window and
+> `reviewer2@` in a private window → open the same incident in both → post an
+> update in one → it appears in the other **without a refresh**. Change a
+> status or severity from the detail page and watch the other session's
+> dashboard re-sort itself. The same credentials are shown on the login page.
 
 ---
 
@@ -59,6 +75,7 @@ Other scripts:
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | yes | Anon key. Safe to expose — every table is behind RLS |
 | `SLOW_STATS_MS` | no (default `600`) | Demo latency on the streamed dashboard stats so the Suspense skeleton is observable. Set `0` for production behaviour |
 | `E2E_EMAIL` / `E2E_PASSWORD` | no | Credentials for the authenticated Playwright tests |
+| `NEXT_PUBLIC_DEMO_EMAIL` / `NEXT_PUBLIC_DEMO_EMAIL_2` / `NEXT_PUBLIC_DEMO_PASSWORD` | no | When set, the login page shows a reviewer-access card with these demo credentials. Leave empty outside demo deployments |
 
 No service-role key is used anywhere. Nothing bypasses row level security.
 `.env.local` is gitignored; `.env.example` documents the shape.
@@ -403,6 +420,17 @@ genuinely cross-cutting (the composer, the status controls and future surfaces
 all raise them), which is the one case where context beats prop drilling. Every
 other kind of state has a narrower home, so no store library and no further
 context: reaching for either would widen state scope without adding capability.
+
+**Why not React Query / SWR:** they solve client-side fetching — caching,
+request dedup, refetch-on-focus, mutation state. This app has no client-side
+fetching to manage: Server Components deliver the data as HTML, `React.cache`
+dedupes within a request, `revalidatePath`/`router.refresh()` invalidate, and
+Server Actions + `useOptimistic` cover mutations. Adding the library would cost
+~13 kB of bundle and, worse, pull the architecture toward `useQuery` calls that
+re-fetch on the client what the server already rendered — precisely the
+duplication this design eliminates. It earns its place the day the app needs
+client-centric data interactions (infinite client-side pagination, polling,
+offline cache); it isn't this day.
 
 **Filters in the URL** is one decision that satisfies four requirements at once:
 shareable, refreshable, preserved through navigation and the back button, and —

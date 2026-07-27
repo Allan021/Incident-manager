@@ -30,7 +30,7 @@ export function Nav({ user }: { user: { name: string; email: string } | null }) 
         }}
       >
         <Logo />
-        <span style={{ fontWeight: 700, fontSize: 15, letterSpacing: '.02em' }}>Opswatch</span>
+        <span style={{ fontWeight: 700, fontSize: 15, letterSpacing: '.02em' }}>KizerWatch</span>
       </Link>
 
       <nav style={{ display: 'flex', gap: 4, flex: 1 }} aria-label="Main">
